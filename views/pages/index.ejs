@@ -1,0 +1,13 @@
+<%- include('../partials/header', { title: "My Books" }) %>
+
+<section class="grid">
+  <% if (books.length === 0) { %>
+    <p class="empty">No books yet. Add one.</p>
+  <% } %>
+
+  <% books.forEach(book => { %>
+    <%- include('../partials/bookCard', { book }) %>
+  <% }) %>
+</section>
+
+<%- include('../partials/footer') %>

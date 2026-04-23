@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Books Project</title>
+  <link rel="stylesheet" href="styles/index.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+
+    <div class="book-badge">
+      <div class="card back"></div>
+      <div class="card front">
+        <span><%=  %></span>
+      </div>
+    </div>
+
+
+    <div class="hero-text">
+      <p class="intro">
+        Hey, my name is Clematins, & these are books I've read
+      </p>
+
+      <p class="sub">
+        I also write short summaries or notes for each book
+      </p>
+
+      <p class="hint">
+        You can Sort by the most recent, rating, title, or best
+      </p>
+    </div>
+
+    <div class="hero-actions">
+      <a href="/books/new" class="btn primary">Add Book</a>
+      <div class="sort">
+    `   <a href="?sort=recent">Recent</a>
+        <a href="?sort=rating">Rating</a>
+        <a href="?sort=title">Title</a>
+       </div>
+    </div>
+
+  </div>
+</header>
+
+<main class="container">

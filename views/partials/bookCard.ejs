@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="cover">
+    <img src="" alt="">
+  </div>
+
+  <div class="content">
+    <h3><%= book.title %></h3>
+    <p class="meta">
+      <span><%= book.date_read %></span>
+      <span>⭐ <%= book.rating %></span>
+    </p>
+
+    <p class="notes"><%= book.notes %></p>
+
+    <div class="card-actions">
+      <a href="/books/<%= book.id %>" class="btn">View</a>
+      <a href="/books/<%= book.id %>/edit" class="btn secondary">Edit</a>
+
+      <form action="/books/<%= book.id %>?_method=DELETE" method="POST">
+        <button class="btn danger">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>

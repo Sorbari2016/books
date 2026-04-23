@@ -1,0 +1,14 @@
+<%- include('../partials/header', { title: "Add Book" }) %>
+
+<form action="/books" method="POST" class="form">
+  <input name="title" placeholder="Book Title" required />
+  <input name="author" placeholder="Author" />
+  <input name="date_read" type="date" />
+  <input name="rating" type="number" min="1" max="5" />
+
+  <textarea name="notes" placeholder="Your notes..."></textarea>
+
+  <button class="btn primary">Save</button>
+</form>
+
+<%- include('../partials/footer') %>
