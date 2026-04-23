@@ -24,7 +24,7 @@ CREATE TABLE reading_log (
 CREATE TABLE summary (
     summary_id SERIAL PRIMARY KEY, 
     note TEXT, 
-    book_read_id NOT NULL REFERENCES reading_log(log_id)
+    book_read_id INT NOT NULL REFERENCES reading_log(log_id)
 ); 
 
 
@@ -35,7 +35,7 @@ INSERT INTO books (title, author)
 INSERT INTO reading_log (date_read, rating, book_id)
     VALUES('2021-11-17', 5, 1); 
 
-INSERT INTO summary (note, book_read_id) 
+INSERT INTO summaries (note, book_read_id) 
     VALUES(`
         Atomic habit is a personal development book by James Clear that teaches how to cultivate good habits 
         and eliminate bad ones using certain laws, principles and real life examples, applying them bits by bits. 
@@ -51,5 +51,5 @@ SELECT bk.title,
        sm.note AS note
 FROM books AS  bk
 JOIN reading_log AS rl ON bk.id = rl.book_id
-JOIN summary AS sm ON rl.book_id = sm.book_read_id; 
+JOIN summaries AS sm ON rl.book_id = sm.book_read_id; 
 
