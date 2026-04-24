@@ -16,7 +16,7 @@ const app = express();
 // Create port for app to listen to
 const PORT = 3000; 
 
-// Use middleware
+// Use middleware, body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Use static files
@@ -35,7 +35,7 @@ const db = new pg.Client({
 // Connect to postgres database
 db.connect(); 
 
-// Create a method to get book data
+// Create a method to get all books' data
 const getBooks = async () => {
     let result = await db.query(`
         SELECT 
@@ -49,7 +49,51 @@ const getBooks = async () => {
     `); 
     
     return result.rows;
-} 
+}; 
+
+
+// store base url of open lib api
+const BASE_URL = 'https://openlibrary.org'; 
+
+// Create method to get covers by title
+const getCoverByTitle = async (title) => {
+    try {
+        // // Encode the title for the URL (replaces spaces with %20, etc.)
+        let encodeTitle = encodeURIComponent(title); 
+        let response = await axios.get(`${BASE_URL}/search.json?title=${encodeTitle}&limit=1`); 
+        let data = response.data;  
+    
+        let book = data.docs[0]; 
+
+        let coverURL = BASE_URL.split('//')[0] + '//' + 'covers.' + BASE_URL.split('//')[1]; 
+
+        // Return the Cover ID URL if found, otherwise a placeholder
+        if (book && book.cover_i) {
+            return {
+                title: title,
+                coverUrl: `${coverURL}/b/id/${book.cover_i}-M.jpg`
+            };
+        } else {
+            return { title: title, coverUrl: null }; // No cover found
+        }
+
+    } catch(error) {
+        console.error(`Error searching for ${title}:`, error); 
+        return { title: title, error: "Search failed" };
+    }
+}; 
+
+// Create a method to get multiple book covers
+const getMultipleCovers = async (bookList) => {
+    // Map every title to a search promise
+    const promises = bookList.map(title => getCoverByTitle(title));
+    
+    // Wait for all searches to finish
+    const results = await Promise.all(promises);
+    
+    return results;
+}
+
 
 // Set up Homepaage route 
 app.get("/", async (req, res) => {
