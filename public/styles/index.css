@@ -1,0 +1,275 @@
+:root {
+  --bg: #0f1115;
+  --card: #1a1d24;
+  --text: #e6e6e6;
+  --muted: #9aa0a6;
+  --accent: #4f8cff;
+  --danger: #ff5c5c;
+  --border: #2a2f3a;
+}
+
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+/* LAYOUT */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem 1.2rem;
+}
+
+/* HERO HEADER */
+.hero {
+  border-bottom: 1px solid var(--border);
+  padding: 4rem 1rem 3rem;
+}
+
+.hero-inner {
+  max-width: 700px;
+  margin: auto;
+  text-align: center;
+}
+
+/* BADGE */
+.book-badge {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 2rem;
+}
+
+.book-badge .card {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+}
+
+.book-badge .back {
+  border: 1px solid var(--border);
+  transform: rotate(-10deg) scale(0.95);
+  opacity: 0.5;
+}
+
+.book-badge .front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--card);
+  border: 1px solid var(--border);
+
+  transform: rotate(5deg);
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.book-badge:hover .front {
+  transform: rotate(5deg) scale(1.05);
+}
+
+/* Number */
+.book-badge span {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* TEXT */
+.hero-text .intro {
+  font-size: 1.15rem;
+  margin-bottom: 0.8rem;
+}
+
+.hero-text .hint {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ACTIONS */
+.hero-actions {
+  margin-top: 1.8rem;
+}
+
+/* SORT */
+.sort {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.sort-type {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.sort a {
+  text-decoration: none;
+  color: var(--text);
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+}
+
+.sort a:hover {
+  background: var(--card);
+}
+
+.sort a.active {
+  background: var(--accent);
+  color: white;
+}
+
+/* CARDS */
+.card {
+  display: flex;
+  gap: 1rem;
+  background: var(--card);
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+/* COVER */
+.cover {
+  width: 90px;
+  height: 130px;
+  flex-shrink: 0;
+  background: #333;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CONTENT */
+.content {
+  flex: 1;
+}
+
+/* TITLE + AUTHOR */
+.book-title {
+  font-size: 1.1rem;
+}
+
+.book-author {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* META */
+.meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: flex;
+  gap: 1rem;
+  margin: 0.4rem 0;
+}
+
+/* NOTES */
+.notes {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* ACTIONS */
+.card-actions {
+  margin-top: 0.7rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.btn img {
+  width: 16px;
+  height: 16px;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+}
+
+/* PRIMARY */
+.primary {
+  background: var(--accent);
+  border: none;
+  color: white;
+}
+
+/* SECONDARY */
+.secondary {
+  border-color: var(--accent);
+}
+
+/* DANGER */
+.danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* FORM */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 500px;
+  margin: auto;
+}
+
+input,
+textarea {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+textarea {
+  min-height: 120px;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--muted);
+}
+
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 2rem;
+}
+
