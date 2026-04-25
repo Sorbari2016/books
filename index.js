@@ -106,14 +106,14 @@ app.get("/", async (req, res) => {
 
     const books = result.map((book) => {
       let matchedCover = covers.find((bk) => bk.title === book.title);
-      let placeholderImage =
+      let placeholderUrl =
         "https://placehold.jp/24/cccccc/ffffff/200x300.png?text=No%20Cover%20Found";
 
       return {
         ...book,
         cover_image_url: matchedCover
           ? matchedCover.coverUrl
-          : placeholderImage,
+          : placeholderUrl,
       };
     });
 

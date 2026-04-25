@@ -4,7 +4,12 @@
   </div>
 
   <div class="content">
-    <h3><%= book.title %></h3>
+    <figure class="main-info">
+      <figcaption>
+          <h3 class="book-title"><%=book.title %></h3>
+          <span class="book-author">by <%=book.author %></span>
+      </figcaption>
+    </figure>
     <p class="meta">
       <span><%= book.date_read %></span>
       <span>⭐ <%= book.rating %></span>
