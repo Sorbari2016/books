@@ -131,6 +131,12 @@ app.get("/", async (req, res) => {
 });
 
 
+// Create Add new book route
+app.get("/books/new", async (req, res) => {
+  const books = await getBooks(); 
+
+  res.render("pages/add.ejs", {totalBooks: books.length});
+})
 
 // Start or run server 
 app.listen(PORT, () => {

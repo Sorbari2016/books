@@ -1,14 +1,58 @@
-<%- include('../partials/header', { title: "Add Book" }) %>
 
-<form action="/books" method="POST" class="form">
-  <input name="title" placeholder="Book Title" required />
-  <input name="author" placeholder="Author" />
-  <input name="date_read" type="date" />
-  <input name="rating" type="number" min="1" max="5" />
+<%- include('../partials/header') %>
+  <main class="container">
 
-  <textarea name="notes" placeholder="Your notes..."></textarea>
+  <section class="form-wrapper">
+    <div class="form-card">
 
-  <button class="btn primary">Save</button>
-</form>
+      <div class="form-header">
+        <h1>Add a new book</h1>
+        <p>Track what you’ve read and your thoughts</p>
+      </div>
+
+      <form action="/books" method="POST" class="form">
+
+        <div class="form-group">
+          <label>Title</label>
+          <input name="title" placeholder="Book Title" required />
+        </div>
+
+        <div class="form-group">
+          <label>Author</label>
+          <input name="author" placeholder="Author" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date Read</label>
+            <input name="date_read" type="date" />
+          </div>
+
+          <div class="form-group">
+            <label>Rating</label>
+            <input name="rating" type="number" min="1" max="5" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea name="notes" placeholder="Your notes..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn primary">Save</button>
+          <a href="/" class="btn">Cancel</a>
+        </div>
+
+      </form>
+
+    </div>
+  </section>
+
+</main>
 
 <%- include('../partials/footer') %>
+
+
+
+

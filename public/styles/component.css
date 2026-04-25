@@ -1,0 +1,95 @@
+/* ADD NEW BOOK FORM */
+
+/* FORM LAYOUT */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 600px;
+
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  padding: 1.5rem;
+}
+
+/* HEADER */
+.form-header {
+  margin-bottom: 1.2rem;
+}
+
+.form-header h1 {
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.form-header p {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* FORM STRUCTURE */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ROW (date + rating) */
+.form-row {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+/* INPUTS */
+input,
+textarea {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+
+  padding: 0.5rem;
+  border-radius: 6px;
+
+  font-size: 0.9rem;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* TEXTAREA */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ACTIONS */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
