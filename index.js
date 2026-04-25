@@ -97,8 +97,39 @@ const getMultipleCovers = async (bookList) => {
 
 // Set up Homepaage route 
 app.get("/", async (req, res) => {
-    
-}); 
+  try {
+    const result = (await getBooks()) || [];
+
+    const titles = result.map((book) => book.title);
+
+    const covers = await getMultipleCovers(titles);
+
+    const books = result.map((book) => {
+      let matchedCover = covers.find((bk) => bk.title === book.title);
+      let placeholderImage =
+        "https://placehold.jp/24/cccccc/ffffff/200x300.png?text=No%20Cover%20Found";
+
+      return {
+        ...book,
+        cover_image_url: matchedCover
+          ? matchedCover.coverUrl
+          : placeholderImage,
+      };
+    });
+
+    console.log(books);
+
+    res.render("pages/index.ejs", {
+      books: books,
+      totalBooks: books.length,
+    });
+  } catch (error) {
+    console.error("Server Error: ", error);
+
+    res.status(500).send("Something went wrong while fetching your library.");
+  }
+});
+
 
 
 // Start or run server 
