@@ -136,7 +136,41 @@ app.get("/books/new", async (req, res) => {
   const books = await getBooks(); 
 
   res.render("pages/add.ejs", {totalBooks: books.length});
-})
+}); 
+
+
+// Create a post route to add a new book
+app.post ("/books", async (req, res) => {
+  const {title, author, date_read,rating, notes } = req.body; 
+
+  try {
+    //Perform multiple table insert, with CTE
+    const result = await db.query(`
+        WITH new_book AS (
+            INSERT INTO books (title, author)
+            VALUES($1, $2)
+            RETURNING id
+          ), 
+          new_log AS (
+            INSERT INTO reading_log (book_id, date_read, rating)
+            SELECT id, $3, $4 
+            FROM new_book
+            RETURNING book_id
+          )
+            INSERT INTO summaries (note, book_read_id)
+            SELECT $5, book_id
+            FROM new_log; 
+      `, 
+      [title, author, date_read, rating, notes]
+    );  
+
+    res.redirect("/");
+
+  } catch(err) {
+    console.log('Error inserting data', err); 
+    res.status(500).send("Failed to save book entry.");
+  }
+}); 
 
 // Start or run server 
 app.listen(PORT, () => {
