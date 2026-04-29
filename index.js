@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import axios from "axios"; 
 import pg from "pg"; 
 import bodyParser from "body-parser";
+import methodOverride from "method-override"; 
 
 // Set up dotenv to process env variables
 dotenv.config(); 
@@ -16,8 +17,9 @@ const app = express();
 // Create port for app to listen to
 const PORT = 3000; 
 
-// Use middleware, body-parser
+// Use middlewares, body-parser, method override 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method')); // Helps the browser make the method, a put 
 
 // Use static files
 app.use(express.static("public"));
@@ -195,7 +197,48 @@ app.get("/books/:id/edit", async (req, res) => {
     totalBooks: books.length,
     formatDate: formatDate,
   })
-})
+}); 
+
+// Create a put method to edit a book 
+app.put("/books/:id", async (req, res) => {
+
+  const {title, author, date_read,rating, notes } = req.body; 
+
+  const bookId = parseInt(req.params.id); 
+  
+  try {
+    const result = await db.query(
+      ` WITH updated_book AS (
+          UPDATE books
+          SET title = $1, 
+              author = $2
+          WHERE id = $3
+          RETURNING id 
+      ),
+         update_log AS (
+          UPDATE reading_log
+          SET date_read = $4,
+              rating = $5
+          FROM updated_book
+          WHERE reading_log.book_id = updated_book.id -- Link log to the updated book
+          RETURNING reading_log.book_id
+        )
+          UPDATE summaries
+          SET note = $6
+          FROM updated_book
+          WHERE summaries.book_read_id = updated_book.id; 
+    
+    `,
+      [title, author, bookId, date_read, rating, notes]
+    )
+  
+  res.redirect("/");
+
+  } catch(error) {
+    console.error('Error updating data', error); 
+    res.status(500).send("Failed to update book entry.");
+  } 
+}); 
 
 // Start or run server 
 app.listen(PORT, () => {
