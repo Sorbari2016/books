@@ -47,7 +47,7 @@ const getBooks = async () => {
             sm.note AS summary
         FROM books AS bk
         JOIN reading_log AS rl ON bk.id = rl.book_id
-        JOIN summaries AS sm ON rl.book_id = sm.book_read_id;   
+        JOIN summaries AS sm ON bk.id = sm.book_id;   
     `); 
     
     return result.rows;
@@ -152,7 +152,7 @@ app.post ("/books", async (req, res) => {
 
   try {
     //Perform multiple table insert, with CTE
-    const result = await db.query(`
+    await db.query(`
         WITH new_book AS (
             INSERT INTO books (title, author)
             VALUES($1, $2)
@@ -162,11 +162,10 @@ app.post ("/books", async (req, res) => {
             INSERT INTO reading_log (book_id, date_read, rating)
             SELECT id, $3, $4 
             FROM new_book
-            RETURNING book_id
           )
-            INSERT INTO summaries (note, book_read_id)
-            SELECT $5, book_id
-            FROM new_log; 
+            INSERT INTO summaries (book_id, note, )
+            SELECT book_id, $5
+            FROM new_book; 
       `, 
       [title, author, date_read, rating, notes]
     );  
@@ -207,7 +206,7 @@ app.put("/books/:id", async (req, res) => {
   const bookId = parseInt(req.params.id); 
   
   try {
-    const result = await db.query(
+    await db.query(
       ` WITH updated_book AS (
           UPDATE books
           SET title = $1, 
@@ -215,18 +214,15 @@ app.put("/books/:id", async (req, res) => {
           WHERE id = $3
           RETURNING id 
       ),
-         update_log AS (
+         updated_log AS (
           UPDATE reading_log
           SET date_read = $4,
               rating = $5
-          FROM updated_book
-          WHERE reading_log.book_id = updated_book.id -- Link log to the updated book
-          RETURNING reading_log.book_id
+          WHERE book_id = $3 -- Link log to the updated book
         )
           UPDATE summaries
           SET note = $6
-          FROM updated_book
-          WHERE summaries.book_read_id = updated_book.id; 
+          WHERE book_id = $3;  
     
     `,
       [title, author, bookId, date_read, rating, notes]
@@ -239,6 +235,21 @@ app.put("/books/:id", async (req, res) => {
     res.status(500).send("Failed to update book entry.");
   } 
 }); 
+
+// Create a delete method to delete a book
+app.delete("/books/:id", async (req, res) => {
+  const bookId = parseInt(req.params.id); 
+
+  try {
+  await db.query("DELETE FROM books WHERE id = $1;", [bookId]);
+
+  res.redirect("/"); 
+
+  } catch (error) {
+    console.error('Cannot delete book', error); 
+    res.status(500).send("Could not delete book");
+  }
+})
 
 // Start or run server 
 app.listen(PORT, () => {
