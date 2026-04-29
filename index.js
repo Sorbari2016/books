@@ -51,6 +51,10 @@ const getBooks = async () => {
     return result.rows;
 }; 
 
+// Convert date to simple yyyy-mm-dd format
+const formatDate = (date) => {
+  return new Date(date).toISOString().split("T")[0];
+};
 
 // store base url of open lib api
 const BASE_URL = 'https://openlibrary.org'; 
@@ -122,6 +126,7 @@ app.get("/", async (req, res) => {
     res.render("pages/index.ejs", {
       books: books,
       totalBooks: books.length,
+      formatDate: formatDate 
     });
   } catch (error) {
     console.error("Server Error: ", error);
@@ -135,7 +140,7 @@ app.get("/", async (req, res) => {
 app.get("/books/new", async (req, res) => {
   const books = await getBooks(); 
 
-  res.render("pages/add.ejs", {totalBooks: books.length});
+  res.render("pages/add.ejs", {totalBooks: books.length, formatDate: formatDate});
 }); 
 
 
@@ -171,6 +176,26 @@ app.post ("/books", async (req, res) => {
     res.status(500).send("Failed to save book entry.");
   }
 }); 
+
+// Create a get method to get the edit page
+app.get("/books/:id/edit", async (req, res) => {
+  const books = await getBooks(); 
+
+  const bookId = parseInt(req.params.id); 
+
+  const book = books.find((bk) => bk.id === bookId); 
+
+  if (!book) {
+    return res.status(404).send("Book not found"); 
+  }
+
+  res.render("pages/edit.ejs", {
+    books: books, 
+    book: book, 
+    totalBooks: books.length,
+    formatDate: formatDate,
+  })
+})
 
 // Start or run server 
 app.listen(PORT, () => {

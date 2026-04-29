@@ -3,12 +3,18 @@
 <form action="/books/<%= book.id %>?_method=PUT" method="POST" class="form">
   <input name="title" value="<%= book.title %>" required />
   <input name="author" value="<%= book.author %>" />
-  <input name="date_read" type="date" value="<%= book.date_read %>" />
+  <%
+    let dateRead = formatDate(book.date_read); 
+  %>
+  <input name="date_read" type="date" value="<%=dateRead %>" />
   <input name="rating" type="number" min="1" max="5" value="<%= book.rating %>" />
 
-  <textarea name="notes"><%= book.notes %></textarea>
+  <textarea name="notes"><%= book.summary %></textarea>
 
-  <button class="btn primary">Update</button>
+  <div class="form-actions">
+          <button class="btn primary">Update</button>
+          <a href="/" class="btn">Cancel</a>
+        </div>
 </form>
 
 <%- include('../partials/footer') %>

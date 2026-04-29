@@ -11,17 +11,15 @@
       </figcaption>
     </figure>
     <p class="meta">
-      <% // get only date
-        let dateRead = 
-          new Date(book.date_read)
-          .toUTCString()
-          .slice(0, 16); 
+      <%
+          // Extrac and format only date 
+          let dateRead = formatDate(book.date_read);  
 
           // use stars for book rating
           let star = '⭐'; 
           let bookRating = star.repeat(book.rating); 
       %>
-      <span><%= dateRead %></span>
+      <span><%=dateRead %></span>
       <span><%= bookRating %></span>
     </p>
 
