@@ -12,14 +12,11 @@
     </figure>
     <p class="meta">
       <%
-          // Extrac and format only date 
-          let dateRead = formatDate(book.date_read);  
-
           // use stars for book rating
           let star = '⭐'; 
           let bookRating = star.repeat(book.rating); 
       %>
-      <span><%=dateRead %></span>
+      <span><%=book.date_read %></span>
       <span><%= bookRating %></span>
     </p>
 

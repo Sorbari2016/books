@@ -3,10 +3,8 @@
 <form action="/books/<%= book.id %>?_method=PUT" method="POST" class="form">
   <input name="title" value="<%= book.title %>" required />
   <input name="author" value="<%= book.author %>" />
-  <%
-    let dateRead = formatDate(book.date_read); 
-  %>
-  <input name="date_read" type="date" value="<%=dateRead %>" />
+  
+  <input name="date_read" type="date" value="<%=book.date_read %>" />
   <input name="rating" type="number" min="1" max="5" value="<%= book.rating %>" />
 
   <textarea name="notes"><%= book.summary %></textarea>

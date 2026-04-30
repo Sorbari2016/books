@@ -53,7 +53,7 @@ const getBooks = async (sortBy) => {
     let result = await db.query(`
         SELECT 
             bk.*, 
-            rl.date_read, 
+            TO_CHAR(rl.date_read,'YYYY-MM-DD') AS date_read, 
             rl.rating,
             sm.note AS summary
         FROM books AS bk
@@ -65,11 +65,6 @@ const getBooks = async (sortBy) => {
     
     return result.rows;
 }; 
-
-// Convert date to simple yyyy-mm-dd format
-const formatDate = (date) => {
-  return new Date(date).toISOString().split("T")[0];
-};
 
 // store base url of open lib api
 const BASE_URL = 'https://openlibrary.org'; 
@@ -144,7 +139,6 @@ app.get("/", async (req, res) => {
     res.render("pages/index.ejs", {
       books: books,
       totalBooks: books.length,
-      formatDate: formatDate 
     });
   } catch (error) {
     console.error("Server Error: ", error);
@@ -210,7 +204,6 @@ app.get("/books/:id/edit", async (req, res) => {
     books: books, 
     book: book, 
     totalBooks: books.length,
-    formatDate: formatDate,
   })
 }); 
 
