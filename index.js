@@ -38,7 +38,18 @@ const db = new pg.Client({
 db.connect(); 
 
 // Create a method to get all books' data
-const getBooks = async () => {
+const getBooks = async (sortBy) => {
+    // define allowed sorting methods
+    let orderByTypes = {
+      recent: "rl.date_read DESC",
+      rating: "rl.rating DESC",
+      title: "bk.title ASC"
+    }
+
+    // Pick a sorting method
+    let orderBy = orderByTypes[sortBy] || "bk.id DESC"; 
+  
+    // query database
     let result = await db.query(`
         SELECT 
             bk.*, 
@@ -47,8 +58,10 @@ const getBooks = async () => {
             sm.note AS summary
         FROM books AS bk
         JOIN reading_log AS rl ON bk.id = rl.book_id
-        JOIN summaries AS sm ON bk.id = sm.book_id;   
-    `); 
+        JOIN summaries AS sm ON bk.id = sm.book_id
+        ORDER BY ${orderBy};
+    `
+      ); 
     
     return result.rows;
 }; 
@@ -103,11 +116,12 @@ const getMultipleCovers = async (bookList) => {
 
 // Set up Homepaage route 
 app.get("/", async (req, res) => {
+
   try {
-    const result = (await getBooks()) || [];
-
+    const sort = req.query.sort || 'recent';
+    
+    const result = (await getBooks(sort)) || [];
     const titles = result.map((book) => book.title);
-
     const covers = await getMultipleCovers(titles);
 
     const books = result.map((book) => {
@@ -124,6 +138,8 @@ app.get("/", async (req, res) => {
     });
 
     console.log(books);
+
+    console.log(sort);
 
     res.render("pages/index.ejs", {
       books: books,
