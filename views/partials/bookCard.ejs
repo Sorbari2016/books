@@ -1,6 +1,9 @@
 <div class="card">
   <div class="cover">
-    <img src="<%=book.cover_image_url %>" alt="<%= book.title + " cover" %>">
+    <% let bookCover = 
+          book.cover_image_url ? book.cover_image_url :"/assets/images/image placeholder.png" 
+    %>
+    <img src="<%=bookCover%>" alt="<%= book.title + " cover" %>">
   </div>
 
   <div class="content">
