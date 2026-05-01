@@ -286,3 +286,26 @@ textarea {
   border: 0;
   background: var(--card);
 }
+
+mark {background-color: #00FFFF;}
+
+
+/* ANIMATION: total number of books */
+.book-badge span {animation: bounce 3s ease-in}
+
+@keyframes bounce {
+  from {
+    color: var(--text);
+    transform: scale(0);
+  }
+
+  50% {
+    color: #00FFFF;
+    transform: scale(3);
+  }
+
+  to {
+    color: var(--text);
+    transform: scale(0); 
+  }
+}
