@@ -82,36 +82,43 @@ JOIN summaries AS sm ON bk.id = sm.book_id;
 -- 2. Insert into all three relations at the same time
 WITH new_book AS (
             INSERT INTO books (title, author)
-            VALUES($1, $2)
+            VALUES('Atomic Habits', 'James Clear')
             RETURNING id
           ), 
           new_log AS (
             INSERT INTO reading_log (book_id, date_read, rating)
-            SELECT id, $3, $4 
+            SELECT id, '2021-11-17', 5 
             FROM new_book
           )
             INSERT INTO summaries (book_id, note)
-            SELECT id, $5
+            SELECT id, `
+            Atomic habit is a personal development book by James Clear that teaches 
+            how to cultivate good habits and eliminate bad ones using certain laws, 
+            principles and real life examples, applying them bits by bits. 
+            He emphasizes developing small habits that end up paying off hugely.
+            Atomic habit is a personal development book by James Clear that teaches how to 
+            cultivate good habits and eliminate bad ones using certain laws, principles and real
+             life examples, applying them bits by bits. He emphasizes developing small habits that end up paying off hugely.    `
             FROM new_book;
 
 
 -- 3. Update multiple tables as well, using a CTE
 WITH updated_book AS (
           UPDATE books
-          SET title = $1, 
-              author = $2
-          WHERE id = $3
+          SET title = 'Atomic Habits', 
+              author = 'James Clear'
+          WHERE id = 1
           RETURNING id 
       ),
          updated_log AS (
           UPDATE reading_log
-          SET date_read = $4,
-              rating = $5
-          WHERE book_id = $3-- Link log to the updated book
+          SET date_read = '2021-11-17',
+              rating = 4
+          WHERE book_id = 1-- Link log to the updated book
         )
           UPDATE summaries
-          SET note = $6
-          WHERE book_id = $3;
+          SET note = ""
+          WHERE book_id = 1;
 
 -- Delete now simply becomes
 DELETE FROM books 

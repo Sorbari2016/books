@@ -132,8 +132,6 @@ app.get("/", async (req, res) => {
       };
     });
 
-    console.log(books);
-
     res.render("pages/index.ejs", {
       books: books,
       totalBooks: books.length,
@@ -175,9 +173,9 @@ app.post ("/books", async (req, res) => {
             SELECT id, $3, $4 
             FROM new_book
           )
-            INSERT INTO summaries (book_id, note, )
-            SELECT book_id, $5
-            FROM new_book; 
+            INSERT INTO summaries (book_id, note)
+            SELECT id, $5
+            FROM new_book;
       `, 
       [title, author, date_read, rating, notes]
     );  
