@@ -134,11 +134,10 @@ app.get("/", async (req, res) => {
 
     console.log(books);
 
-    console.log(sort);
-
     res.render("pages/index.ejs", {
       books: books,
       totalBooks: books.length,
+      showHero: true, 
     });
   } catch (error) {
     console.error("Server Error: ", error);
@@ -152,7 +151,10 @@ app.get("/", async (req, res) => {
 app.get("/books/new", async (req, res) => {
   const books = await getBooks(); 
 
-  res.render("pages/add.ejs", {totalBooks: books.length, formatDate: formatDate});
+  res.render("pages/add.ejs", {
+    totalBooks: books.length, 
+    showHero: false,
+  });
 }); 
 
 
@@ -204,6 +206,7 @@ app.get("/books/:id/edit", async (req, res) => {
     books: books, 
     book: book, 
     totalBooks: books.length,
+    showHero: false,
   })
 }); 
 

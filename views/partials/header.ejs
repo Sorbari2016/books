@@ -19,28 +19,10 @@
       </div>
     </div>
 
-
-    <div class="hero-text">
-      <p class="intro">
-        Hey, my name is  <strong>Clematins</strong>, & these are <mark>books</mark> I've read...
-      </p>
-
-      <p class="hint">
-        You can Sort by the most recent, rating, title, or best
-      </p>
-    </div>
-
-    <div class="hero-actions">
-      <a href="/books/new" class="btn primary">Add Book</a>
-      <div class="sort">
-        <p>Sort by</p>
-       <span class="sort-type">
-          <a href="?sort=recent">Recent</a>
-          <a href="?sort=rating">Rating</a>
-          <a href="?sort=title">Title</a>
-        </span>
-       </div>
-    </div>
+    <!-- Render hero conditionally -->
+    <% if (locals.showHero) { %>
+          <%- include('./hero') %>
+    <% } %>
 
   </div>
 </header>
