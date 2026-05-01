@@ -38,6 +38,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
+  margin-top: 10px;
 }
 
 .form-group {
@@ -93,3 +94,5 @@ textarea {
   gap: 0.6rem;
   margin-top: 0.5rem;
 }
+
+

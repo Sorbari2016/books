@@ -1,5 +1,9 @@
 <%- include('../partials/header', { title: "Edit Book" }) %>
 
+<div class="home btn ">
+          <a href="/" class="btn">Home</a>
+</div>
+
 <form action="/books/<%= book.id %>?_method=PUT" method="POST" class="form">
   <input name="title" value="<%= book.title %>" required />
   <input name="author" value="<%= book.author %>" />
