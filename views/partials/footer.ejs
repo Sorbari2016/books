@@ -2,5 +2,20 @@
   <footer class="footer">
     <p>© <%= new Date().getFullYear() %> Clematins Nwiibee</p>
   </footer>
+
+  <script>
+
+    // Add a counter to the total books read
+      const el = document.querySelector('.book-badge span');
+      let count = 0;
+      const target = Number(el.textContent);
+
+      const interval = setInterval(() => {
+        count++;
+        el.textContent = count;
+        if (count >= target) clearInterval(interval);
+      }, 20);
+
+  </script>
 </body>
 </html>
